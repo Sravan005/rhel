@@ -1,43 +1,500 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <div class="container-login100" style="background-image: url('bg-01.jpg');"></div>
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+
+<body>    
+    
+<h2 id="new-heading" class="top-heading" style="display: none;">Please find below the missing security patches from the server</h2>
+
+
+<div id="ssh-config-container">
+    <form class="row g-3 needs-validation" id="ssh-config-form" novalidate>  
+        <span class="login100-form-title p-b-49">
+            Enter Host details
+        </span>
+        <div class="col-md-4-mb-2">
+          <label for="validationCustom01" class="form-label">Server IP</label>
+          <input type="text" class="form-control" id="validationCustom01" value="" required>
+          <div class="invalid-feedback">
+            Server IP is required
+          </div>
+        </div>       
+        <div class="col-md-4-mb-4">
+          <label for="validationCustomUsername" class="form-label">Username</label>
+          <div class="input-group has-validation">
+            <!-- <span class="input-group-text" id="inputGroupPrepend"></span> -->
+            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+            <div class="invalid-feedback">
+              Username is required.
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-4-mb-2">
+            <label for="validationCustompassword" class="form-label">Password</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend"></span>
+              <input type="text" class="form-control" id="validationCustompassword" aria-describedby="inputGroupPrepend" required>
+              <div class="invalid-feedback">
+                Password is required.
+              </div>
+            </div>
+          </div>       
+        <div class="col-12">
+          <button class="btn btn-success" type="submit" id="server-b">Submit form</button>
+        </div>
+      </form>
+      <script>
+        
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+  'use strict';
+  
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation');
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+})();
+
+    </script>
+    </div>
+   
+
+
+    
+    
+    <div class="button-container">
+        <div class="rhsa-button-container">
+    </div>
+        <button id="check-rhea">Check RHSA</button>
+    </div>
+        </div>
+
+        <script>
+            // Create a WebSocket connection
+            const socket = new WebSocket('ws://localhost:3002');
+        
+            socket.addEventListener('message', (event) => {
+                const message = JSON.parse(event.data);
+        
+                if (message.type === 'data-update') {
+                    // Update your UI or activate the check-rhea button
+                    activateCheckrhsaButton();
+                }
+            });
+        
+            function activateCheckrhsaButton() {
+                const loading = document.getElementById('loading');
+                loading.style.display = 'none';
+                const checkRheaButton = document.getElementById('check-rhea');
+                checkRheaButton.style.display = 'block';
+                // You can further customize the activation logic here
+            }
+        </script>
+
+        <button id="download-csv" style="display: none;">Download as CSV</button>
+        <!-- Add the loading GIF element -->
+    <img id="loading-gif" src="/public/images/sad-scared.gif" alt="Loading" style="display: none;">
+    <img id="loading" src="/public/images/Gray_circles_rotate.gif" alt="Loading" style="display: none;">
+       <div class="result-container">
+            <div id="server-info"></div>
+       <table id="rhea-table">
+            <thead>
+                <tr>
+                    <th>Rhsa number </th>
+                    <th>Threat <span id="threat-sort-arrow">&#9660;</span></th>
+                    <th>Release date</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+        <label for="threat-filter" id="threat-filter-label" style="display: none;">Filter by Threat Level:</label>
+            
+<select id="threat-filter" style="display: none;">
+    
+    <option value="all">All</option>
+    <option value="Critical">Critical</option>
+    <option value="Important">Important</option>
+    <option value="Moderate">Moderate</option>
+    <option value="Low">Low</option>
+    
+</select>
+            <tbody id="rhea-table-body"></tbody>
+        </table>
+
+        
+            <h4 id="results-heading" style="display: none;">Server Details</h4>
+        <ul id="result-list"></ul>
+
+        <div id="threat-box-container">
+            <div class="threat-box" id="critical-box"></div>
+            <div class="threat-box" id="important-box"></div>
+            <div class="threat-box" id="moderate-box"></div>
+            <div class="threat-box" id="low-box"></div>
+
+        </div>
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const threatFilter = document.getElementById('threat-filter');
+            const RHELButton = document.getElementById('RHEL-button');
+            const SUSEButton = document.getElementById('SUSE-button');
+            const checkRHEAButton = document.getElementById('check-rhea');             
+            const resultList = document.getElementById('result-list');
+            const rheaTableBody = document.getElementById('rhea-table-body');
+            const threatBoxContainer = document.getElementById('threat-box-container');
+            const sshConfigForm = document.getElementById('ssh-config-form');
+            const newHeading = document.getElementById('new-heading');
+            const sshConfigContainer = document.getElementById('ssh-config-container');
+            const welcomePage = document.querySelector('.content');
+            const downloadButton = document.getElementById('download-csv');
+            const threatSortArrow = document.getElementById('threat-sort-arrow');
+            const serverb = document.getElementById('server-b');
+
+
+//threat sort arrow code
+    threatSortArrow.addEventListener('click', () => {
+        // Sort rows based on threat level: Critical > Important > Moderate > Low
+        const rows = document.querySelectorAll('#rhea-table-body tr');
+        const sortedRows = Array.from(rows).sort((a, b) => {
+        const threatLevelA = a.querySelector('.threat-cell').textContent.trim();
+        const threatLevelB = b.querySelector('.threat-cell').textContent.trim();
+        const threatOrder = ['Critical', 'Important', 'Moderate', 'Low'];
+        return threatOrder.indexOf(threatLevelA) - threatOrder.indexOf(threatLevelB);
+    });
+        // Clear the table body
+        const tableBody = document.getElementById('rhea-table-body');
+        tableBody.innerHTML = '';
+
+        // Append sorted rows to the table body
+        sortedRows.forEach(row => {
+            tableBody.appendChild(row);
+        });
+    });
+
+
+
+//download as csv button functionality
+    downloadButton.addEventListener('click', () => {
+        // Get visible table data as an array of arrays
+        const visibleRows = Array.from(document.querySelectorAll('#rhea-table-body tr')).filter(row => row.style.display !== 'none');
+        const tableData = visibleRows.map(row => {
+        return Array.from(row.querySelectorAll('td')).map(cell => cell.textContent);
+    });
+        // Add column headers to the table data
+        const columnHeaders = ['Rhsa number', 'Threat', 'Release date', 'Note']; // Replace these with your actual column headers
+        tableData.unshift(columnHeaders); // Add headers as the first row
+        // Convert table data to formatted CSV content
+        const csvContent = tableData.map(row => row.join(', ')).join('\n'); // Add a space after the comma
+        // Create a Blob containing the CSV data
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        // Create a download link and trigger the download
+        const downloadLink = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'rhea_data.csv';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
+
+
+
+
+    sshConfigForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (sshConfigForm.checkValidity()) {
+    
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            // Get values from the form
+            const host = document.getElementById('validationCustom01').value;
+            const username = document.getElementById('validationCustomUsername').value;
+            const password = document.getElementById('validationCustompassword').value;
+          
+            const selectedButton = 'RHEL'
+                const data = {
+                    host: host,
+                    username: username,
+                    password: password,
+                    selectedButton : selectedButton
+                };
+            
+                // Send form data to the server
+                fetch('http://localhost:3001/update-ssh-config', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                }) 
+            
+                fetch('http://localhost:3001/ssh', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify( data )
+                })
+
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                        // Display the VM version on the frontend
+                        document.getElementById("version").textContent = `${data.version}`;
+                        // Display the hostname on the frontend
+                        document.getElementById("hostname").textContent = `${data.hostname}`;
+                        
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+                        const serverInfo = {
+                            serverName: data.hostname,
+                            ipAddress: host,
+                            versionInfo: data.version
+                        };
+
+                    resultList.innerHTML = ''; // Clear previous results
+                    const listItem = document.createElement('li');
+                    listItem.className = 'server-details'; // Add a CSS class to the listItem
+                    listItem.innerHTML = `
+                    <ul style="list-style-type:none; padding: 0;">
+    <li><strong>Server name</strong><span id="hostname"></span></li><br><br>
+    <li><strong>IP Address</strong> ${serverInfo.ipAddress}</li><br><br>
+    <li><strong>Version</strong><span id="version"></span></li>
+</ul>
+                    `;
+
+                    //listItem.textContent = data.output; // Assuming the server response has an 'output' property
+                    resultList.appendChild(listItem);
+
+                    // //  fetch('http://localhost:3001/trigger-robocorp-process', {
+                    // //      method: 'POST',
+                    // //      headers: {
+                    // //          'Content-Type': 'application/json',
+                    // //      },
+                    // //      body: JSON.stringify({}), // Add your data to be sent in the body if needed
+                    // //  })
+
+                    //  .then(response => response.json())
+                    //  .then(postResponse => {
+                    //  console.log('POST Request Success:', postResponse);
+                    //  })     
+
+                    // Show the "Check RHEA" button after clicking on a server button
+                    const sshConfigContainer = document.getElementById('ssh-config-container');
+                    sshConfigContainer.style.display = 'none';
+                    resultList.style.display = 'block';
+                    document.getElementById('results-heading').style.display = 'block';
+ 
+            }  sshConfigForm.classList.add('was-validated');
+}, false);
+            
+
+// Event listener for "Check RHEA" button
+    checkRHEAButton.addEventListener('click', () => {
+           const loadingGif = document.getElementById('loading-gif');
+           loadingGif.style.display = 'block';
+        
+        // Now fetch the updated RHSA numbers
+        fetch('http://localhost:3001/api')
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log('The data from /api ', data);
+                resultList.innerHTML = ''; // Clear previous results
+
+            // Array to store all RHSA fetch promises
+            const fetchPromises = [];
+            let CriticalCount = 0;
+            let importantCount = 0;
+            let moderateCount = 0;
+            let lowCount = 0;
+
+            data.forEach(result => {                
+                
+                const fetchPromise = fetch(`http://localhost:3001/rhea/${result}`)
+                    .then(response => response.json())
+                    .then(rheaData => {
+
+                        // Extract the required fields from the JSON response for the specific RHSA entry
+                        const initialReleaseDate = new Date(rheaData.cvrfdoc.document_tracking.initial_release_date);
+                        // Extract day, month, and year components
+                        const day = String(initialReleaseDate.getDate()).padStart(2, '0');
+                        const month = String(initialReleaseDate.getMonth() + 1).padStart(2, '0'); // Month is 0-based
+                        const year = initialReleaseDate.getFullYear();
+                        // Format date as DD-MM-YYYY
+                        let formattedReleaseDate = `${day}-${month}-${year}`;
+                        let threatDescription = rheaData.cvrfdoc.vulnerability[0].threats.threat.description;
+                        let description = rheaData.cvrfdoc.vulnerability[0].notes.note;
+                    //    let threatDescription = threatDescription;
+                    
+            //sort by threat level filter functionality                       
+            threatFilter.addEventListener('change', () => {
+                const selectedThreatLevel = threatFilter.value;
+                const rows = document.querySelectorAll('#rhea-table-body tr');
+
+            // Filter rows by selected threat level
+                const filteredRows = Array.from(rows).filter(row => {
+                    const threatCell = row.querySelector('.threat-cell');
+                    const threat = threatCell.textContent.trim();
+                    return selectedThreatLevel === 'all' || threat === selectedThreatLevel;
+                });
+
+            // Sort filtered rows by threat level order: Critical > Important > Moderate > Low
+            const sortedRows = filteredRows.sort((a, b) => {
+                const threatCellA = a.querySelector('.threat-cell');
+                const threatA = threatCellA.textContent.trim();
+                const threatCellB = b.querySelector('.threat-cell');
+                const threatB = threatCellB.textContent.trim();
+                const threatOrder = ['Critical', 'Important', 'Moderate', 'Low'];
+                return threatOrder.indexOf(threatA) - threatOrder.indexOf(threatB);
+            });
+
+            // Hide all rows by default
+            rows.forEach(row => {
+                row.style.display = 'none';
+            });
+
+            // Display sorted rows for the selected threat level or for all threat levels
+            sortedRows.forEach(row => {
+                row.style.display = '';
+            });
+        });
+        
+//threat sort arrow code
+    threatSortArrow.addEventListener('click', () => {
+            // Sort rows based on threat level: Critical > Important > Moderate > Low
+                const sortedRows = Array.from(rows).sort((a, b) => {
+                const threatLevelA = a.querySelector('.threat-cell').textContent.trim();
+                const threatLevelB = b.querySelector('.threat-cell').textContent.trim();
+                const threatOrder = ['Critical', 'Important', 'Moderate', 'Low'];
+                return threatOrder.indexOf(threatLevelA) - threatOrder.indexOf(threatLevelB);
+            });
+
+            // Clear the table body
+            const tableBody = document.getElementById('rhea-table-body');
+            tableBody.innerHTML = '';
+
+            // Append sorted rows to the table body
+        sortedRows.forEach(row => {
+            tableBody.appendChild(row);
+        });
+    });
+
+            if (threatDescription === 'Critical') {
+                CriticalCount++;
+            }
+            if (threatDescription === 'Important') {
+                importantCount++;
+            } else if (threatDescription === 'Moderate') {
+                moderateCount++;
+            } else if (threatDescription === 'Low') {
+                lowCount++;
+            }
+        resultList.innerHTML = ''
+            //Populate the table with the extracted data
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${result}</td>
+            <td class="threat-cell ${threatDescription.toLowerCase()}-cell">${threatDescription}</td>
+            <td>${formattedReleaseDate}</td>
+                
+            <td>${description}</td>
+            `;
+            rheaTableBody.appendChild(row);
+                })
+
+                .catch(error => {
+                        console.error(`Error fetching data for ${result}:`, error);
+                        // Handle errors if any
+                    });
+                    // After populating the RHEA table, display the threat level filter dropdown
+                fetchPromises.push(fetchPromise);
+                });     
+
+            const logoImage = document.querySelector('.logo-image');
+                if (logoImage) {
+                    logoImage.style.display = 'none';
+                }
+                const resultsHeading = document.getElementById('results-heading');
+                if (resultsHeading) {
+                    resultsHeading.style.display = 'none';
+                }
+                checkRHEAButton.style.display = 'none';
+                const newHeading = document.getElementById('new-heading');
+                if (newHeading) {
+                    newHeading.style.display = 'block';
+                }
+
+            // Wait for all fetch requests to complete before populating the table
+            Promise.all(fetchPromises)
+                .then(() => {
+                    const criticalBox = document.getElementById('critical-box');
+                    const importantBox = document.getElementById('important-box');
+                    const moderateBox = document.getElementById('moderate-box');
+                    const lowBox = document.getElementById('low-box');
+                   
+                    criticalBox.textContent = `Critical: ${CriticalCount}`;
+                    importantBox.textContent = `Important: ${importantCount}`;
+                    moderateBox.textContent = `Moderate: ${moderateCount}`;
+                    lowBox.textContent = `Low: ${lowCount}`;
+
+                    loadingGif.style.display = 'none';
+                    const downloadButton = document.getElementById('download-csv');
+                    downloadButton.style.display = 'block';
+                    document.getElementById('threat-filter-label').style.display = 'inline-block';
+                    document.getElementById('threat-filter').style.display = 'inline-block';
+
+                    // Show the threat boxes after setting their content
+                    document.getElementById('threat-box-container').style.display = 'block';
+                    document.getElementById('rhea-table').style.display = 'table';
+
+                    // Append the threat box container above the rhea table
+                    const rheaTable = document.getElementById('rhea-table');
+                    rheaTable.parentNode.insertBefore(document.getElementById('threat-box-container'), rheaTable);
+                    checkRHEAButton.style.display = 'none';
+                })
+        })
+                .catch(error => {
+                    console.error('Error fetching RHSA data:', error);
+                });
+             
+        
+            })
+        });
+             </script>
+
+        </body>
 </html>

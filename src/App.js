@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+const express = require('express');
+const connectDatabase = require('./server.mjs');
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const app = express();
+const port = 3000; // Choose your desired port
 
-export default App;
+app.get('/api/rhsa', async (req, res) => {
+  const db = await connectDatabase();
+  const collection = db.collection('RHSA'); // Correct collection name
+
+  try {
+    const data = await collection.find().toArray();
+    res.json(data);
+  } catch (err) {
+    console.error('Error fetching data from MongoDB:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  } finally {
+    db.close();
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
